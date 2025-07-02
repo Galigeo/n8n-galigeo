@@ -5,9 +5,9 @@ import {
 	INodeProperties,
 } from 'n8n-workflow';
 
-export class ExampleCredentialsApi implements ICredentialType {
-	name = 'exampleCredentialsApi';
-	displayName = 'Example Credentials API';
+export class GaligeoCredentialsApi implements ICredentialType {
+	name = 'galigeoCredentialsApi';
+	displayName = 'Galigeo Credentials API';
 
 	documentationUrl = 'https://your-docs-url';
 
@@ -30,6 +30,13 @@ export class ExampleCredentialsApi implements ICredentialType {
 			},
 			default: '',
 		},
+		{
+			displayName: 'Organization',
+			name: 'organization',
+			type: 'string',
+			default: '',
+			description: 'The organization you want to access',
+		},
 	];
 
 	// This credential is currently not used by any node directly
@@ -38,22 +45,24 @@ export class ExampleCredentialsApi implements ICredentialType {
 	authenticate: IAuthenticateGeneric = {
 		type: 'generic',
 		properties: {
-			auth: {
-				username: '={{ $credentials.username }}',
-				password: '={{ $credentials.password }}',
-			},
-			qs: {
-				// Send this as part of the query string
-				n8n: 'rocks',
-			},
+			// These aren't used if you do custom requests in the node
 		},
 	};
 
 	// The block below tells how this credential can be tested
 	test: ICredentialTestRequest = {
 		request: {
-			baseURL: 'https://example.com/',
-			url: '',
+			method: 'POST',
+			url: 'https://cloud2.galigeo.com/Galigeo/feature/portal/login',
+			body: {
+				userName: '={{ $credentials.username }}',
+				password: '={{ $credentials.password }}',
+				orgId: '={{ $credentials.organization }}',
+			},
+			headers: {
+				'Content-Type': 'application/json',
+			},
 		},
 	};
+
 }

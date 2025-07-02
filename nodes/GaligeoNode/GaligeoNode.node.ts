@@ -6,15 +6,16 @@ import type {
 } from 'n8n-workflow';
 import { NodeConnectionType, NodeOperationError } from 'n8n-workflow';
 
-export class ExampleNode implements INodeType {
+export class GaligeoNode implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Example Node',
-		name: 'exampleNode',
+		displayName: 'Galigeo Node',
+		name: 'galigeoNode',
+		icon: 'file:logo_galigeo.svg', // Path to the icon file relative to the node's directory
 		group: ['transform'],
 		version: 1,
-		description: 'Basic Example Node',
+		description: 'Basic Galigeo Node',
 		defaults: {
-			name: 'Example Node',
+			name: 'Galigeo Node',
 		},
 		inputs: [NodeConnectionType.Main],
 		outputs: [NodeConnectionType.Main],
